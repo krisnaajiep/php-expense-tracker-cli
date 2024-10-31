@@ -221,7 +221,7 @@ function help(): string
     $yellow . 'Usage:' . $reset . PHP_EOL .
     "  command [arguments]\n\n" .
     $yellow . "Available commands and arguments:" . $reset . PHP_EOL .
-    '  set --budget <budget>                                                           Set monthly budget
+    '  set --budget <budget>                                                       Set monthly budget
   add --category <category> --description <description> --amount <amount>     Add new expense
   update --budget <budget>                                                    Update monthly budget
   update --id <id> --category <category>                                      Update expense category
