@@ -219,7 +219,7 @@ function help(): string
   $help =
     $green . "\nPHP Expense Tracker CLI \n" . $reset . PHP_EOL .
     $yellow . 'Usage:' . $reset . PHP_EOL .
-    "  command [arguments]\n\n" .
+    "  php expense-tracker.php command <flag> <arguments>\n\n" .
     $yellow . "Available commands and arguments:" . $reset . PHP_EOL .
     '  set --budget <budget>                                                       Set monthly budget
   add --category <category> --description <description> --amount <amount>     Add new expense
