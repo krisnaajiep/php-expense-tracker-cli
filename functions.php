@@ -160,3 +160,29 @@ function summary(array $data, array $argv): string
 
   return "# Total expenses$forMonth: $$summary\n";
 }
+
+function setBudget($argv): string
+{
+  global $file;
+
+  if ($argv[1] != 'set' || $argv[1] == 'set' && (!isset($argv[2]) || $argv[2] != '--budget')) {
+    return "# Please insert budget per month\n# Usage: php index.php set --budget <budget>\n";
+  } else {
+    if (isset($argv[3]) && is_numeric($argv[3]) && $argv[3] > 0) {
+      if (isset($file[0]['budgetPerMonth'])) {
+        $file[0]['budgetPerMonth'] = $argv[3];
+      } else {
+        array_push($file, [
+          'budgetPerMonth' => $argv[3],
+          'data' => [],
+        ]);
+      }
+
+      file_put_contents('expenses.json', json_encode($file, JSON_PRETTY_PRINT));
+
+      return "# Your budget per month is $$argv[3]\n";
+    } else {
+      return "# Invalid budget\n# Budget must be numeric and positive\n";
+    }
+  }
+}

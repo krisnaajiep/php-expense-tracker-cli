@@ -14,6 +14,11 @@ $data = isset($file[0]['data'])
 require_once 'functions.php';
 
 if (isset($argv[1])) {
+  if (!isset($file[0]['budgetPerMonth'])) {
+    echo setBudget($argv);
+    exit;
+  }
+
   switch ($argv[1]) {
     case 'add':
       echo add($argv);
@@ -33,6 +38,10 @@ if (isset($argv[1])) {
 
     case 'summary':
       echo summary($data, $argv);
+      break;
+
+    case 'set':
+      echo setBudget($argv);
       break;
 
     default:
