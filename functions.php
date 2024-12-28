@@ -40,8 +40,8 @@ function update(array $argv): string
   global $data, $file;
 
   for ($i = 2; $i <= 5; $i++) {
-    if (count($argv) < 5 || $argv[2] != '--id' || !in_array($argv[4], ['--description', '--amount']))
-      return "# Invalid input\n\n# Usage:\n# php expense-tracker.php update --id <id> --description <description>\n# php expense-tracker.php update --id <id> --amount <amount>\n";
+    if (count($argv) < 5 || $argv[2] != '--id' || !in_array($argv[4], ['--description', '--amount', '--category']))
+      return "# Invalid input\n\n# Usage:\n# php expense-tracker.php update --id <id> --description <description>\n# php expense-tracker.php update --id <id> --amount <amount>\n# php expense-tracker.php update --id <id> --category <category>\n";
   }
 
   if ($argv[4] == '--amount' && (!is_numeric($argv[5]) || $argv[5] < 1))
@@ -50,8 +50,19 @@ function update(array $argv): string
   foreach ($data as $key => $value) {
     if ($value['id'] == $argv[3]) {
       $id = $argv[3];
-      if ($argv[4] == '--description') $data[$key]['description'] = $argv[5];
-      if ($argv[4] == '--amount') $data[$key]['amount'] = $argv[5];
+      switch (true) {
+        case ($argv[4] == '--description'):
+          $data[$key]['description'] = $argv[5];
+          break;
+
+        case ($argv[4] == '--amount'):
+          $data[$key]['amount'] = $argv[5];
+          break;
+
+        case ($argv[4] == '--category'):
+          $data[$key]['category'] = $argv[5];
+          break;
+      }
 
       $data[$key]['updated_at'] = date('Y-m-d H:i:s');
 
