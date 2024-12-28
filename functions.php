@@ -2,6 +2,12 @@
 
 $file = json_decode(file_get_contents('expenses.json'), true);
 
+/**
+ * Add new expense.
+ *
+ * @param array $argv
+ * @return string
+ */
 function add(array $argv): string
 {
   for ($i = 2; $i <= 7; $i++) {
@@ -38,6 +44,12 @@ function add(array $argv): string
   return "# Expense added successfully (ID: $id)\n";
 }
 
+/**
+ * Update an expense.
+ *
+ * @param array $argv
+ * @return string
+ */
 function update(array $argv): string
 {
   global $data, $file;
@@ -81,6 +93,12 @@ function update(array $argv): string
   return "# Id not found\n";
 }
 
+/**
+ * Delete an expense.
+ *
+ * @param array $argv
+ * @return string
+ */
 function delete(array $argv): string
 {
   if (!isset($argv[2]) || $argv[2] != '--id')
@@ -103,6 +121,12 @@ function delete(array $argv): string
   return "# Id not found\n";
 }
 
+/**
+ * Formats a single expense entry into a readable string for display.
+ *
+ * @param array $expense
+ * @return string
+ */
 function fetch(array $expense): string
 {
   $date = explode(' ', $expense['created_at'])[0];
@@ -117,6 +141,12 @@ function fetch(array $expense): string
   return $row;
 }
 
+/**
+ * Display all expenses or by a specific category.
+ *
+ * @param array $argv
+ * @return string
+ */
 function show(array $argv): string
 {
   global $data;
@@ -139,6 +169,13 @@ function show(array $argv): string
   return implode("\n", $list);
 }
 
+/**
+ * View a summary of all expenses or by specific month.
+ *
+ * @param array $data
+ * @param array $argv
+ * @return string
+ */
 function summary(array $data, array $argv): string
 {
   $summary = 0;
@@ -166,7 +203,13 @@ function summary(array $data, array $argv): string
   return "# Total expenses$forMonth: $$summary\n";
 }
 
-function setBudget($argv): string
+/**
+ * Set a budget for each month.
+ *
+ * @param array $argv
+ * @return string
+ */
+function setBudget(array $argv): string
 {
   global $file;
 
@@ -192,7 +235,15 @@ function setBudget($argv): string
   }
 }
 
-function checkBudget($data, $file, $argv): string|null
+/**
+ * Checks if the total expenses, including a potential addition or update, exceed the monthly budget limit.
+ *
+ * @param array $data
+ * @param array $file
+ * @param array $argv
+ * @return string|null
+ */
+function checkBudget(array $data, array $file, array $argv): string|null
 {
   $summary = intval(explode('$', summary($data, [null, null, '--month', intval(date('m'))]))[1]);
   if ($argv[1] == 'add') {
@@ -211,7 +262,13 @@ function checkBudget($data, $file, $argv): string|null
   }
 }
 
-function showBudget($argv)
+/**
+ * Display the monthly budget that has been set.
+ *
+ * @param array $argv
+ * @return void
+ */
+function showBudget(array $argv)
 {
   if (!isset($argv[2]) || $argv[2] != '--budget') return "# Invalid input\n# Usage: php index.php show --budget <budget>\n";
 
@@ -221,6 +278,12 @@ function showBudget($argv)
   return "# Your budget per month is $$budgetPerMonth\n";
 }
 
+/**
+ * Export expenses to a CSV file.
+ *
+ * @param array $data
+ * @return string
+ */
 function export(array $data): string
 {
   if (!empty($data)) {
