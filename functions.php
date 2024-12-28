@@ -63,3 +63,25 @@ function update(array $argv): string
 
   return "# Id not found\n";
 }
+
+function delete(array $argv): string
+{
+  if (!isset($argv[2]) || $argv[2] != '--id')
+    return "# Task id required\n# Usage: php index.php delete --id <id>\n";
+
+  global $data, $file;
+
+  foreach ($data as $key => $value) {
+    if ($value['id'] == $argv[3]) {
+      $id = $argv[3];
+      unset($data[$key]);
+      $data = array_values($data);
+      $file[0]['data'] = $data;
+      file_put_contents('expenses.json', json_encode($file, JSON_PRETTY_PRINT));
+
+      return "# Expense deleted successfully (ID: $id)\n";
+    }
+  }
+
+  return "# Id not found\n";
+}
