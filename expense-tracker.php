@@ -44,6 +44,10 @@ if (isset($argv[1])) {
       echo setBudget($argv);
       break;
 
+    case 'show':
+      echo showBudget($argv);
+      break;
+
     default:
       echo "Command not found\n";
       break;

@@ -210,3 +210,13 @@ function checkBudget($data, $file, $argv): string|null
     return null;
   }
 }
+
+function showBudget($argv)
+{
+  if (!isset($argv[2]) || $argv[2] != '--budget') return "# Invalid input\n# Usage: php index.php show --budget <budget>\n";
+
+  global $file;
+
+  $budgetPerMonth = $file[0]['budgetPerMonth'];
+  return "# Your budget per month is $$budgetPerMonth\n";
+}
