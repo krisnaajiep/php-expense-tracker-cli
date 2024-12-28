@@ -85,3 +85,26 @@ function delete(array $argv): string
 
   return "# Id not found\n";
 }
+
+function fetch(array $expense): string
+{
+  $date = explode(' ', $expense['created_at'])[0];
+  $description = strlen($expense['description']) > 22
+    ? substr($expense['description'], 0, 20) . '...'
+    : $expense['description'];
+  $row = "# " . str_pad($expense['id'], 5) . str_pad($date, 15) . str_pad($description, 25) . '$' . str_pad($expense['amount'], 10);
+
+  return $row;
+}
+
+function show(array $argv): string
+{
+  global $data;
+
+  $list = ["# " . str_pad('ID', 5) . str_pad('Date', 15) . str_pad('Description', 25) . str_pad('Amount', 10)];
+
+  foreach ($data as $expense) array_push($list, fetch($expense));
+
+  $list[count($list) - 1] .= "\n";
+  return implode("\n", $list);
+}

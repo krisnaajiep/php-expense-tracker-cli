@@ -27,6 +27,10 @@ if (isset($argv[1])) {
       echo delete($argv);
       break;
 
+    case 'list':
+      echo show($argv);
+      break;
+
     default:
       echo "Command not found\n";
       break;
