@@ -220,3 +220,17 @@ function showBudget($argv)
   $budgetPerMonth = $file[0]['budgetPerMonth'];
   return "# Your budget per month is $$budgetPerMonth\n";
 }
+
+function export(array $data): string
+{
+  if (!empty($data)) {
+    $file = fopen('expenses.csv', 'w');
+    fputcsv($file, array_keys($data[0]), ';');
+    foreach ($data as $row) fputcsv($file, $row, ';');
+    fclose($file);
+
+    return "# Data has been exported to expenses.csv\n";
+  }
+
+  return "# Empty expenses data\n";
+}

@@ -48,6 +48,10 @@ if (isset($argv[1])) {
       echo showBudget($argv);
       break;
 
+    case 'export':
+      echo export($data);
+      break;
+
     default:
       echo "Command not found\n";
       break;
