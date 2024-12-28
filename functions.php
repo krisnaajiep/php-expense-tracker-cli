@@ -5,7 +5,7 @@ $file = json_decode(file_get_contents('expenses.json'), true);
 function add(array $argv): string
 {
   for ($i = 2; $i <= 5; $i++) {
-    if (!isset($argv[$i]) || $argv[2] != '--description' && $argv[4] != '--amount')
+    if (!isset($argv[$i]) || $argv[2] != '--description' || $argv[4] != '--amount')
       return "# Invalid input\n# Usage: php expense-tracker.php add --description <description> --amount <amount>\n";
   }
 
