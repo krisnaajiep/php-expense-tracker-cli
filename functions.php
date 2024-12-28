@@ -14,6 +14,9 @@ function add(array $argv): string
 
   global $data, $file;
 
+  $checkBudget = checkBudget($data, $file, $argv);
+  if (!is_null($checkBudget)) return $checkBudget;
+
   $id = count($data) + 1;
 
   foreach ($data as $expense) {
@@ -57,6 +60,8 @@ function update(array $argv): string
 
         case ($argv[4] == '--amount'):
           $data[$key]['amount'] = $argv[5];
+          $checkBudget = checkBudget($data, $file, $argv);
+          if (!is_null($checkBudget)) return $checkBudget;
           break;
 
         case ($argv[4] == '--category'):
@@ -184,5 +189,24 @@ function setBudget($argv): string
     } else {
       return "# Invalid budget\n# Budget must be numeric and positive\n";
     }
+  }
+}
+
+function checkBudget($data, $file, $argv): string|null
+{
+  $summary = intval(explode('$', summary($data, [null, null, '--month', intval(date('m'))]))[1]);
+  if ($argv[1] == 'add') {
+    $summary += $argv[5];
+  }
+
+  $maxBudget = intval($file[0]['budgetPerMonth']);
+  $action = $argv[1] == 'add'
+    ? 'addition'
+    : 'change';
+
+  if ($summary > $maxBudget) {
+    return "# Exceeded budget per month\n# Max budget per month: $$maxBudget\n# Summary after {$action}: $$summary\n";
+  } else {
+    return null;
   }
 }
