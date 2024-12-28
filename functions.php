@@ -107,7 +107,17 @@ function show(array $argv): string
 
   $list = ["# " . str_pad('ID', 5) . str_pad('Date', 15) . str_pad('Description', 25) . str_pad('Amount', 10) . str_pad('Category', 15)];
 
-  foreach ($data as $expense) array_push($list, fetch($expense));
+  foreach ($data as $expense) {
+    if (isset($argv[2]) && $argv[2] == '--category') {
+      if (isset($argv[3]) && $expense['category'] == $argv[3]) {
+        array_push($list, fetch($expense));
+      } elseif (!isset($argv[3])) {
+        return "# Invalid input\n# Usage: php expense-tracker.php list --category <category>\n";
+      }
+    } else {
+      array_push($list, fetch($expense));
+    }
+  }
 
   $list[count($list) - 1] .= "\n";
   return implode("\n", $list);
