@@ -317,7 +317,6 @@ function help(): string
     "  set     --budget <budget>                                                       Set monthly budget
   show    --budget                                                                Show monthly budget
   add     --description <description> --amount <amount> --category <category>     Add new expense
-  update  --budget <budget>                                                       Update monthly budget
   update  --id <id> --category <category>                                         Update expense category
   update  --id <id> --description <description>                                   Update expense description
   update  --id <id> --amount <amount>                                             Update expense amount
