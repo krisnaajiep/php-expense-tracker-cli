@@ -93,7 +93,10 @@ function fetch(array $expense): string
   $description = strlen($expense['description']) > 22
     ? substr($expense['description'], 0, 20) . '...'
     : $expense['description'];
-  $row = "# " . str_pad($expense['id'], 5) . str_pad($date, 15) . str_pad($description, 25) . '$' . str_pad($expense['amount'], 10);
+  $category = strlen($expense['category']) > 12
+    ? substr($expense['category'], 0, 10) . '...'
+    : $expense['category'];
+  $row = "# " . str_pad($expense['id'], 5) . str_pad($date, 15) . str_pad($description, 25) . '$' . str_pad($expense['amount'], 10) . str_pad($category, 15);
 
   return $row;
 }
@@ -102,7 +105,7 @@ function show(array $argv): string
 {
   global $data;
 
-  $list = ["# " . str_pad('ID', 5) . str_pad('Date', 15) . str_pad('Description', 25) . str_pad('Amount', 10)];
+  $list = ["# " . str_pad('ID', 5) . str_pad('Date', 15) . str_pad('Description', 25) . str_pad('Amount', 10) . str_pad('Category', 15)];
 
   foreach ($data as $expense) array_push($list, fetch($expense));
 
