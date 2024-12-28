@@ -33,3 +33,33 @@ function add(array $argv): string
 
   return "# Expense added successfully (ID: $id)\n";
 }
+
+function update(array $argv): string
+{
+  global $data, $file;
+
+  for ($i = 2; $i <= 5; $i++) {
+    if (!isset($argv[$i]) || $argv[2] != '--id' || !in_array($argv[4], ['--description', '--amount']))
+      return "# Invalid input\n\n# Usage:\n# php index.php update --id <id> --description <description>\n# php index.php update --id <id> --amount <amount>\n";
+  }
+
+  if ($argv[4] == '--amount' && (!is_numeric($argv[5]) || $argv[5] < 1))
+    return "# Invalid amount\n# Amount must be numeric and positive\n";
+
+  foreach ($data as $key => $value) {
+    if ($value['id'] == $argv[3]) {
+      $id = $argv[3];
+      if ($argv[4] == '--description') $data[$key]['description'] = $argv[5];
+      if ($argv[4] == '--amount') $data[$key]['amount'] = $argv[5];
+
+      $data[$key]['updated_at'] = date('Y-m-d H:i:s');
+
+      $file[0]['data'][$key] = $data[$key];
+      file_put_contents('expenses.json', json_encode($file, JSON_PRETTY_PRINT));
+
+      return "# Expense updated successfully (ID: $id)\n";
+    }
+  }
+
+  return "# Id not found\n";
+}

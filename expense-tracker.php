@@ -19,6 +19,10 @@ if (isset($argv[1])) {
       echo add($argv);
       break;
 
+    case 'update':
+      echo update($argv);
+      break;
+
     default:
       echo "Command not found\n";
       break;
