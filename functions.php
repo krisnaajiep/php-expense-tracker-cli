@@ -108,3 +108,30 @@ function show(array $argv): string
   $list[count($list) - 1] .= "\n";
   return implode("\n", $list);
 }
+
+function summary(array $data, array $argv): string
+{
+  $summary = 0;
+  $forMonth = '';
+
+  if (!is_null($data)) {
+    foreach ($data as $expense) {
+      if (isset($argv[2]) && $argv[2] == '--month') {
+        $date = explode(' ', $expense['created_at'])[0];
+        $year = explode('-', $date)[0];
+        $month = explode('-', $date)[1];
+
+        if ($argv[3] > 12) return "# Invalid month\n";
+
+        if ($year == date('Y') && intval($month) == $argv[3])
+          $summary += intval($expense['amount']);
+
+        $forMonth = ' for ' . date_format(date_create_from_format('n-d', $argv[3] . '-01'), 'F');
+      } else {
+        $summary += intval($expense['amount']);
+      }
+    }
+  }
+
+  return "# Total expenses$forMonth: $$summary\n";
+}

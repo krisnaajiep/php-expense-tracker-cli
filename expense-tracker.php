@@ -31,6 +31,10 @@ if (isset($argv[1])) {
       echo show($argv);
       break;
 
+    case 'summary':
+      echo summary($data, $argv);
+      break;
+
     default:
       echo "Command not found\n";
       break;
