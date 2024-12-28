@@ -56,4 +56,6 @@ if (isset($argv[1])) {
       echo "Command not found\n";
       break;
   }
+} elseif (!isset($argv[1])) {
+  echo help();
 }

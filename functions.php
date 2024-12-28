@@ -297,3 +297,36 @@ function export(array $data): string
 
   return "# Empty expenses data\n";
 }
+
+/**
+ * Display guide for using PHP Expense Tracker CLI
+ *
+ * @return string
+ */
+function help(): string
+{
+  $yellow = "\033[33m";
+  $green = "\033[32m";
+  $reset = "\033[0m";
+
+  $help =
+    $green . "\nPHP Expense Tracker CLI \n" . $reset . PHP_EOL .
+    $yellow . 'Usage:' . $reset . PHP_EOL .
+    "  php expense-tracker.php <command> [options] <arguments>\n\n" .
+    $yellow . "Available commands, options, and arguments:" . $reset . PHP_EOL .
+    "  set     --budget <budget>                                                       Set monthly budget
+  show    --budget                                                                Show monthly budget
+  add     --description <description> --amount <amount> --category <category>     Add new expense
+  update  --budget <budget>                                                       Update monthly budget
+  update  --id <id> --category <category>                                         Update expense category
+  update  --id <id> --description <description>                                   Update expense description
+  update  --id <id> --amount <amount>                                             Update expense amount
+  delete  --id <id>                                                               Delete an expense
+  list                                                                            List all expenses
+  list    --category <category>                                                   List expenses by category
+  summary                                                                         View a summary of all expenses
+  summary --month <month>                                                         View a summary of expenses for a specific month
+  export                                                                          Export expenses data into csv file\n\n";
+
+  return $help;
+}
