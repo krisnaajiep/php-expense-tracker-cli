@@ -41,7 +41,7 @@ function update(array $argv): string
 
   for ($i = 2; $i <= 5; $i++) {
     if (count($argv) < 5 || $argv[2] != '--id' || !in_array($argv[4], ['--description', '--amount']))
-      return "# Invalid input\n\n# Usage:\n# php index.php update --id <id> --description <description>\n# php index.php update --id <id> --amount <amount>\n";
+      return "# Invalid input\n\n# Usage:\n# php expense-tracker.php update --id <id> --description <description>\n# php expense-tracker.php update --id <id> --amount <amount>\n";
   }
 
   if ($argv[4] == '--amount' && (!is_numeric($argv[5]) || $argv[5] < 1))
@@ -68,7 +68,7 @@ function update(array $argv): string
 function delete(array $argv): string
 {
   if (!isset($argv[2]) || $argv[2] != '--id')
-    return "# Task id required\n# Usage: php index.php delete --id <id>\n";
+    return "# Task id required\n# Usage: php expense-tracker.php delete --id <id>\n";
 
   global $data, $file;
 
