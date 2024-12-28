@@ -5,8 +5,8 @@ $file = json_decode(file_get_contents('expenses.json'), true);
 function add(array $argv): string
 {
   for ($i = 2; $i <= 7; $i++) {
-    if (count($argv) < 7 || $argv[2] != '--description' || $argv[4] != '--amount')
-      return "# Invalid input\n# Usage: php expense-tracker.php add --description <description> --amount <amount>\n";
+    if (count($argv) < 7 || $argv[2] != '--description' || $argv[4] != '--amount' || $argv[6] != '--category')
+      return "# Invalid input\n# Usage: php expense-tracker.php add --description <description> --amount <amount> --category <category>\n";
   }
 
   if (!is_numeric($argv[5]) || $argv[5] < 1)
@@ -24,6 +24,7 @@ function add(array $argv): string
     'id' => $id,
     'description' => $argv[3],
     'amount' => $argv[5],
+    'category' => $argv[7],
     'created_at' => date('Y-m-d H:i:s'),
     'updated_at' => date('Y-m-d H:i:s'),
   ]);
